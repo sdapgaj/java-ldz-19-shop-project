@@ -1,4 +1,4 @@
-package pl.sda.intermediate;
+package pl.sda.intermediate.zad1;
 
 import lombok.AccessLevel;
 import lombok.Getter;

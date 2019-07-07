@@ -1,4 +1,4 @@
-package pl.sda.intermediate;
+package pl.sda.intermediate.zad1;
 
 import java.math.BigDecimal;
 import java.util.*;
