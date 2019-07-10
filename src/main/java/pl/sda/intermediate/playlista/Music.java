@@ -1,4 +1,4 @@
-package pl.sda.intermediate.zad2;
+package pl.sda.intermediate.playlista;
 
 public class Music extends Playable {
 

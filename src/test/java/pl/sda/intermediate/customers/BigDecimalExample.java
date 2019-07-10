@@ -1,4 +1,4 @@
-package pl.sda.intermediate.zad1;
+package pl.sda.intermediate.customers;
 
 import org.junit.Test;
 

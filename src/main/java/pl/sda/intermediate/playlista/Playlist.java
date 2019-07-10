@@ -1,4 +1,4 @@
-package pl.sda.intermediate.zad2;
+package pl.sda.intermediate.playlista;
 
 import java.util.ArrayList;
 import java.util.Collections;
