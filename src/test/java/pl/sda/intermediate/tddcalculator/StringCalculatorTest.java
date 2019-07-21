@@ -103,4 +103,48 @@ public class StringCalculatorTest {
 
     }
 
+    @Test
+    public void shouldThrowExceptionWhenNegativesNumberGiven() {
+
+        // given
+        String text = "//; 4 ; -5 ; -45";
+
+        // then
+        NegativeNumberException negativeNumberException = Assertions.assertThrows(
+                NegativeNumberException.class,
+                () -> StringCalculator.adding(text)
+        );
+
+        Assertions.assertEquals("Negative numbers found -5, -45", negativeNumberException.getMessage());
+
+    }
+
+    @Test
+    public void shouldReturnSumAndIgnoreNumbersBiggerThanThousand() {
+
+        // given
+        String text = "4, 4, 4, 1000, 10001";
+
+        // when
+        int result = StringCalculator.adding(text);
+
+        // then
+        Assertions.assertEquals(1012, result);
+
+    }
+
+    @Test
+    public void shouldReturnSumWithLongCustomDelimiter() {
+
+        // given
+        String text = "//[&&&]\n 4 &&& 4 &&& 10001";
+
+        // when
+        int result = StringCalculator.adding(text);
+
+        // then
+        Assertions.assertEquals(8, result);
+
+    }
+
 }

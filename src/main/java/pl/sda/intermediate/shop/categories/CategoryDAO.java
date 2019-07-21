@@ -1,8 +1,7 @@
-package pl.sda.intermediate.ksiazki;
+package pl.sda.intermediate.shop.categories;
 
 import lombok.Getter;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;

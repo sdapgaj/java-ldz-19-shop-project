@@ -1,7 +1,9 @@
-package pl.sda.intermediate.ksiazki;
+package pl.sda.intermediate.shop;
 
 
 import org.junit.jupiter.api.Test;
+import pl.sda.intermediate.shop.categories.Category;
+import pl.sda.intermediate.shop.categories.CategoryDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

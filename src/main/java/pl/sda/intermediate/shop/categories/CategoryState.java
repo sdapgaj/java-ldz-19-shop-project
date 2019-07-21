@@ -1,4 +1,4 @@
-package pl.sda.intermediate.ksiazki;
+package pl.sda.intermediate.shop.categories;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
