@@ -66,7 +66,6 @@ public class StringCalculator {
             throw new NegativeNumberException(negativeNumbers);
         }
 
-
         return numbers.stream()
                 .reduce((a, b) -> a + b)
                 .orElse(0);
