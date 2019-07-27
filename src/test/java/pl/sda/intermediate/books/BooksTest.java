@@ -11,7 +11,7 @@ class BooksTest {
 
         BooksCollection books = new BooksCollection();
         books.readBooksData();
-
+        books.getBooksCollection();
 
 
     }

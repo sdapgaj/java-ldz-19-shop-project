@@ -10,10 +10,12 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 class BooksCollection {
 
-    List<Books> booksCollection = new ArrayList<>();
+    private List<Books> booksCollection = new ArrayList<>();
 
     void readBooksData() {
 
@@ -29,18 +31,26 @@ class BooksCollection {
 
         if (allLines.size() > 0) {
 
-            String regex = "^(.)+(\\d)+$";
+            String regex = "^(.*)(\\s+)(\\d+)$";
 
             for (String line : allLines) {
                 if (line.matches(regex)) {
 
-                    String[] tmp = line.split(regex);
+                    Pattern pattern = Pattern.compile(regex);
+                    Matcher matcher = pattern.matcher(line.trim());
+                    matcher.matches();
+
+                    String name = matcher.group(1);
+                    String id = matcher.group(3);
+
+//                    System.out.println(String.format("%s - %s\n", id, name));
 
                     booksCollection.add(new Books(
-                            "Test",
-                            234,
+                            name,
+                            Integer.parseInt(id),
                             Arrays.asList()
                     ));
+
                 }
             }
 
@@ -48,8 +58,17 @@ class BooksCollection {
 
     }
 
-    @Override
-    public String toString() {
-        return super.toString();
+    public void getBooksCollection() {
+        for (int i = 0; i < booksCollection.size(); i++) {
+
+            System.out.println(String.format(
+                    "%d. - %s: %s", i, booksCollection.get(i).getBookId(), booksCollection.get(i).getBookName()
+            ));
+
+//            System.out.println(String.format(
+//                    "%d. - %s:", i, booksCollection.get(i).getBookId()
+//            ));
+
+        }
     }
 }

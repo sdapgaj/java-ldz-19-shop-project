@@ -68,6 +68,10 @@ public class ValidationService {
             errorsMap.put("phoneValRes", "Nr telefonu ma niepoprawny format.");
         }
 
+        if (StringUtils.isBlank(registrationDTO.getCity())) {
+            errorsMap.put("cityValRes", "Miasto jest wymagane.");
+        }
+
         return errorsMap;
     }
 
