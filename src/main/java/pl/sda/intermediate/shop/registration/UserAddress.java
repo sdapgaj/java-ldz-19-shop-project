@@ -5,11 +5,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserAddress {
+public class UserAddress implements Serializable {
+
+    private long serialVersionUID = 1223L;
 
     private String city;
     private String country;

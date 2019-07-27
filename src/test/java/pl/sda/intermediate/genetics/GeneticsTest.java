@@ -26,4 +26,10 @@ class GeneticsTest {
 
     }
 
+    @Test
+    void newTest() {
+        Genetics gen = new Genetics();
+        gen.newProgramParalel();
+    }
+
 }

@@ -4,7 +4,11 @@ import org.apache.commons.codec.digest.DigestUtils;
 
 public class RegistrationService {
 
-    private UserDAO userDAO = new UserDAO();
+    private UserDAO userDAO = null;
+
+    public RegistrationService(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
 
     public void register(RegistrationDTO registrationDTO) {
 

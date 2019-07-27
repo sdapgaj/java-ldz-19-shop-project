@@ -1,29 +1,66 @@
 package pl.sda.intermediate.shop.registration;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class UserDAO {
 
-    List<User> users = new ArrayList<>();
+    private Map<String, User> usersByEmail = new HashMap<>();
+    private String filePath = "/usr/home/michal/pageDatabase";
+
+    {
+        this.readFromFile();
+    }
 
     public void addNewUser(User user) {
 
-        users.add(user);
+        usersByEmail.put(user.getEMail(), user);
+
+        try (
+                FileOutputStream fos = new FileOutputStream(filePath);
+                ObjectOutputStream oos = new ObjectOutputStream(fos)
+        ) {
+
+            oos.writeObject(usersByEmail);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
     boolean checkIfUserExistsByEmail(String email) {
 
-        for (User user : users) {
-            if (user.getEMail().equals(email)) {
-                return true;
-            }
-        }
-
-        return false;
-
-//        return users.stream().anyMatch(u -> u.getEMail().equals(email));
+//        return usersByEmail.stream().anyMatch(u -> u.getEMail().equals(email));
+        return usersByEmail.containsKey(email);
 
     }
+
+    public void readFromFile() {
+
+        try (
+                FileInputStream fis = new FileInputStream(filePath);
+                ObjectInputStream ois = new ObjectInputStream(fis)
+        ) {
+
+            Object o = ois.readObject();
+            if(o instanceof List) {
+                List<User> users = (List<User>) o;
+                users.stream()
+                        .collect(Collectors.toMap(u -> u.getEMail(), u -> u));
+            } else {
+                usersByEmail = (Map<String, User>) o;
+            }
+
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    public Optional<User> findUserByEmail(String email) {
+        return Optional.ofNullable(usersByEmail.get(email));
+    }
+
 }
