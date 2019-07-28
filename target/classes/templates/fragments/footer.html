@@ -22,8 +22,8 @@
             .success(
                 function (response) {
                     console.log(response.data)
-                    openweathermap.find(".weather-right-card__temperature-min").text((response.main.temp_min) + '°C')
-                    openweathermap.find(".weather-right-card__temperature-max").text((response.main.temp_max) + '°C')
+                    openweathermap.find(".weather-right-card__temperature-min").text((response.main.tempMin) + '°C')
+                    openweathermap.find(".weather-right-card__temperature-max").text((response.main.tempMax) + '°C')
                     openweathermap.find(".widget-right__description").text((response.weather[0].description))
                     $("#weather-image").attr('src', '//openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/' + response.weather[0].icon + '.png')
                     openweathermap.find(".widget-right__title").text((response.name) + ', ' + response.sys.country)

@@ -15,4 +15,8 @@ public class UserContextHolder {
         login = null;
     }
 
+    public static String getUserLoggedIn() {
+        return login;
+    }
+
 }

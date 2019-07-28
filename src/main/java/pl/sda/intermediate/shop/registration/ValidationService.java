@@ -22,10 +22,12 @@ package pl.sda.intermediate.shop.registration;
  */
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@Service
 public class ValidationService {
 
     public Map<String, String> validateUserData(RegistrationDTO registrationDTO) {

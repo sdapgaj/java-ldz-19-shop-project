@@ -2,12 +2,15 @@ package pl.sda.intermediate.shop.categories;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class CategoryService {
+
+    Predicate<CategoryDTO> realPredicate = e -> e.getState().getOpened() || e.getState().getSelected();
+    Predicate<CategoryDTO> dummyPredicate = e -> true;
 
     public List<CategoryDTO> findCategories(String searchText) {
 
@@ -24,8 +27,15 @@ public class CategoryService {
                     openParent(foundCategory, dtosMap);
                 });
 
-        return new ArrayList<>(dtosMap.values());
+        return populateResult(dtosMap, StringUtils.isNotBlank(searchText)? realPredicate : dummyPredicate);
 
+    }
+
+    private List<CategoryDTO> populateResult(Map<Integer, CategoryDTO> dtosMap, Predicate<CategoryDTO> predicate) {
+
+        return dtosMap.values().stream()
+                .filter(predicate)
+                .collect(Collectors.toList());
     }
 
     private void openParent(CategoryDTO categoryDTO, Map<Integer, CategoryDTO> dtos) {

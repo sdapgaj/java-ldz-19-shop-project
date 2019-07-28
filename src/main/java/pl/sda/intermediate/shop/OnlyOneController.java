@@ -1,18 +1,18 @@
 package pl.sda.intermediate.shop;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import pl.sda.intermediate.shop.categories.CategoryDTO;
 import pl.sda.intermediate.shop.categories.CategoryService;
 import pl.sda.intermediate.shop.login.LoginDTO;
 import pl.sda.intermediate.shop.login.LoginService;
+import pl.sda.intermediate.shop.login.UserContextHolder;
 import pl.sda.intermediate.shop.registration.*;
+import pl.sda.intermediate.shop.weather.WeatherService;
+import pl.sda.intermediate.shop.weather.WeatherWrapper;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,10 +20,13 @@ import java.util.Map;
 public class OnlyOneController {
 
     private CategoryService categoryService = new CategoryService();
-    private ValidationService validationService = new ValidationService();
     private UserDAO userDAO = new UserDAO();
     private RegistrationService registrationService = new RegistrationService(userDAO);
     private LoginService loginService = new LoginService(userDAO);
+    private WeatherService weatherService = new WeatherService(userDAO);
+//    private ValidationService validationService = new ValidationService();
+    @Autowired // zamiast powyzszego, klasa musi byc Servicem
+    private ValidationService validationService;
 
     @RequestMapping("/categories")
     public String categories(@RequestParam(required = false) String input, Model model) {
@@ -81,6 +84,20 @@ public class OnlyOneController {
             return "loginPage";
         }
 
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout(Model model) {
+        UserContextHolder.delLoggedUser();
+        model.addAttribute("form", new LoginDTO());
+        return "loginPage";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/weather", method = RequestMethod.GET)
+    public WeatherWrapper weather() {
+        WeatherWrapper weatherWrapper = weatherService.downloadWeather();
+        return weatherWrapper;
     }
 
 }

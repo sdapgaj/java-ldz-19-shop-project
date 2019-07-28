@@ -63,4 +63,8 @@ public class UserDAO {
         return Optional.ofNullable(usersByEmail.get(email));
     }
 
+    public String findUsercity(String email) {
+        return "Lodz";
+    }
+
 }
