@@ -1,12 +1,14 @@
 package pl.sda.intermediate.shop.categories;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
+@Service
 public class CategoryService {
 
     Predicate<CategoryDTO> realPredicate = e -> e.getState().getOpened() || e.getState().getSelected();

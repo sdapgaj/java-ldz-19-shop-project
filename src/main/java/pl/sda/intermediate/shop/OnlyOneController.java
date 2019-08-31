@@ -19,13 +19,15 @@ import java.util.Map;
 @Controller
 public class OnlyOneController {
 
-    private CategoryService categoryService = new CategoryService();
-    private UserDAO userDAO = new UserDAO();
-    private RegistrationService registrationService = new RegistrationService(userDAO);
-    private LoginService loginService = new LoginService(userDAO);
-    private WeatherService weatherService = new WeatherService(userDAO);
-//    private ValidationService validationService = new ValidationService();
-    @Autowired // zamiast powyzszego, klasa musi byc Servicem
+    @Autowired
+    private CategoryService categoryService;
+    @Autowired
+    private RegistrationService registrationService;
+    @Autowired
+    private LoginService loginService;
+    @Autowired
+    private WeatherService weatherService;
+    @Autowired
     private ValidationService validationService;
 
     @RequestMapping("/categories")

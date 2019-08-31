@@ -1,9 +1,12 @@
 package pl.sda.intermediate.shop.registration;
 
+import org.springframework.stereotype.Service;
+
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Service
 public class UserDAO {
 
     private Map<String, User> usersByEmail = new HashMap<>();

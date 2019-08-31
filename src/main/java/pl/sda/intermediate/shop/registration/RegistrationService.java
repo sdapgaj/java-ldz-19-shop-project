@@ -1,14 +1,14 @@
 package pl.sda.intermediate.shop.registration;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service
 public class RegistrationService {
 
+    @Autowired
     private UserDAO userDAO = null;
-
-    public RegistrationService(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     public void register(RegistrationDTO registrationDTO) {
 

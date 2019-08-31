@@ -1,5 +1,6 @@
 package pl.sda.intermediate.shop.weather;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.intermediate.shop.login.UserContextHolder;
 import pl.sda.intermediate.shop.registration.User;
@@ -8,19 +9,15 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.java8.Java8CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
-//@Service
+@Service
 public class WeatherService {
 
     private String baseUrl = "http://api.openweathermap.org/";
     private String apiKey = "ea900b66f547fd7b23625544873a4200";
+    @Autowired
     private UserDAO userDAO;
-
-    public WeatherService(UserDAO userDAO) {
-        this.userDAO = userDAO;
-    }
 
     public WeatherWrapper downloadWeather() {
         String userLoggedIn = UserContextHolder.getUserLoggedIn();
