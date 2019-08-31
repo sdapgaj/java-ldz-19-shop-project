@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 public class RegistrationService {
 
     @Autowired
-    private UserDAO userDAO = null;
+    private FileUserDAO fileUserDAO = null;
 
     public void register(RegistrationDTO registrationDTO) {
 
-        if (userDAO.checkIfUserExistsByEmail(registrationDTO.getEMail())) {
+        if (fileUserDAO.checkIfUserExistsByEmail(registrationDTO.getEMail())) {
             throw new UserExistsException(registrationDTO.getEMail());
         }
 
@@ -20,7 +20,7 @@ public class RegistrationService {
 
         user.setPasswordHash(DigestUtils.sha512Hex(registrationDTO.getPassword()));
 
-        userDAO.addNewUser(user);
+        fileUserDAO.addNewUser(user);
 
     }
 

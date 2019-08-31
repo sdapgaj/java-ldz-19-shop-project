@@ -4,17 +4,17 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.sda.intermediate.shop.registration.User;
-import pl.sda.intermediate.shop.registration.UserDAO;
+import pl.sda.intermediate.shop.registration.FileUserDAO;
 
 @Service
 public class LoginService {
 
     @Autowired
-    private UserDAO userDAO;
+    private FileUserDAO fileUserDAO;
 
     public boolean login(LoginDTO loginDTO) {
 
-        boolean ableToLogin = userDAO
+        boolean ableToLogin = fileUserDAO
                 .findUserByEmail(loginDTO.getLogin())
                 .map( u -> compareHashes(loginDTO, u))
                 .orElse(false);

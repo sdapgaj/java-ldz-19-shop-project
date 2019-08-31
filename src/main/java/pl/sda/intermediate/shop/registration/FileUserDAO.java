@@ -8,7 +8,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Repository
-public class UserDAO {
+public class FileUserDAO implements UserDAO {
 
     private Map<String, User> usersByEmail = new HashMap<>();
     private String filePath = "D:\\work\\sda\\javaldz19\\intermediate\\src\\main\\resources\\pageDatabase";
@@ -34,7 +34,7 @@ public class UserDAO {
 
     }
 
-    boolean checkIfUserExistsByEmail(String email) {
+    public boolean checkIfUserExistsByEmail(String email) {
 
 //        return usersByEmail.stream().anyMatch(u -> u.getEMail().equals(email));
         return usersByEmail.containsKey(email);
@@ -48,7 +48,7 @@ public class UserDAO {
         ) {
 
             Object o = ois.readObject();
-            if(o instanceof List) {
+            if (o instanceof List) {
                 List<User> users = (List<User>) o;
                 users.stream()
                         .collect(Collectors.toMap(u -> u.getEMail(), u -> u));
