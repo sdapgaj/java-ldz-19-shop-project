@@ -1,6 +1,7 @@
 package pl.sda.intermediate.shop.categories;
 
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,22 +15,31 @@ public class CategoryService {
     Predicate<CategoryDTO> realPredicate = e -> e.getState().getOpened() || e.getState().getSelected();
     Predicate<CategoryDTO> dummyPredicate = e -> true;
 
+    @Autowired
+    private CategoryDAO categoryDAO;
+
     public List<CategoryDTO> findCategories(String searchText) {
 
-        CategoryDAO categoryDAO = CategoryDAO.getInstance();
+        //FileCategoryDAO fileCategoryDAO = FileCategoryDAO.getInstance();
 
-        Map<Integer, CategoryDTO> dtosMap = categoryDAO.getCategoryLIst().stream()
+        Map<Integer, CategoryDTO> dtosMap = categoryDAO.getCategoryList().stream()
                 .map(e -> convertToCategoryDTO(e))
                 .collect(Collectors.toMap(e -> e.getId(), e -> e));
 
         dtosMap.values().stream()
-                .filter(e -> e.getName().equals(StringUtils.defaultIfBlank(searchText, "").trim()))
+                .filter(e -> {
+                    if (StringUtils.isNotBlank(searchText)) {
+                        return e.getName().toLowerCase().contains(StringUtils.defaultIfBlank(searchText, "").toLowerCase().trim());
+                    } else {
+                        return false;
+                    }
+                })
                 .forEach(foundCategory -> {
                     foundCategory.makAsSelected();
                     openParent(foundCategory, dtosMap);
                 });
 
-        return populateResult(dtosMap, StringUtils.isNotBlank(searchText)? realPredicate : dummyPredicate);
+        return populateResult(dtosMap, StringUtils.isNotBlank(searchText) ? realPredicate : dummyPredicate);
 
     }
 

@@ -3,11 +3,11 @@ package pl.sda.intermediate.shop;
 
 import org.junit.jupiter.api.Test;
 import pl.sda.intermediate.shop.categories.Category;
-import pl.sda.intermediate.shop.categories.CategoryDAO;
+import pl.sda.intermediate.shop.categories.FileCategoryDAO;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class CategoryDAOTest {
+public class FileCategoryDAOTest {
 
     @Test
     public void shouldPopulateProperty() {
@@ -18,8 +18,8 @@ public class CategoryDAOTest {
         testCategory.setLevel(2);
         testCategory.setCategoryName("Klasa druga");
 
-        CategoryDAO categoryDAO = CategoryDAO.getInstance();
-        Category category = categoryDAO.getCategoryLIst()
+        FileCategoryDAO fileCategoryDAO = FileCategoryDAO.getInstance();
+        Category category = fileCategoryDAO.getCategoryList()
                 .stream()
                 .filter(i -> i.getCategoryId().equals(6))
                 .findFirst()
