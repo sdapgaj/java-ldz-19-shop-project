@@ -2,17 +2,19 @@ package pl.sda.intermediate.shop.registration;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RegistrationService {
 
     @Autowired
-    private FileUserDAO fileUserDAO = null;
+    @Qualifier(value = "DBUserDAO")
+    private UserDAO userDAO = null;
 
     public void register(RegistrationDTO registrationDTO) {
 
-        if (fileUserDAO.checkIfUserExistsByEmail(registrationDTO.getEMail())) {
+        if (userDAO.checkIfUserExistsByEmail(registrationDTO.getEMail())) {
             throw new UserExistsException(registrationDTO.getEMail());
         }
 
@@ -20,7 +22,7 @@ public class RegistrationService {
 
         user.setPasswordHash(DigestUtils.sha512Hex(registrationDTO.getPassword()));
 
-        fileUserDAO.addNewUser(user);
+        userDAO.addNewUser(user);
 
     }
 

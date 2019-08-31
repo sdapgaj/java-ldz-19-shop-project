@@ -1,9 +1,11 @@
 package pl.sda.intermediate.shop.weather;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import pl.sda.intermediate.shop.login.UserContextHolder;
 import pl.sda.intermediate.shop.registration.FileUserDAO;
+import pl.sda.intermediate.shop.registration.UserDAO;
 import retrofit2.Retrofit;
 import retrofit2.adapter.java8.Java8CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -16,11 +18,12 @@ public class WeatherService {
     private String baseUrl = "http://api.openweathermap.org/";
     private String apiKey = "ea900b66f547fd7b23625544873a4200";
     @Autowired
-    private FileUserDAO fileUserDAO;
+    @Qualifier(value = "DBUserDAO")
+    private UserDAO userDAO;
 
     public WeatherWrapper downloadWeather() {
         String userLoggedIn = UserContextHolder.getUserLoggedIn();
-        String cityOfUser = fileUserDAO.findUserByEmail(userLoggedIn)
+        String cityOfUser = userDAO.findUserByEmail(userLoggedIn)
 //                .map(n -> n.getAddress().getCity()).orElseThrow(() -> new RuntimeException("City not found"));
                 .map(n -> n.getAddress().getCity()).orElse("Lodz");
 

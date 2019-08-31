@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 @Getter
@@ -20,8 +21,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 public class User implements Serializable {
-
-    private long serialVersionUID = 123L;
+    @Transient
+    private static long serialVersionUID = 123L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

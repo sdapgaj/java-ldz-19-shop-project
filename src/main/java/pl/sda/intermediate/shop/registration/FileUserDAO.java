@@ -7,7 +7,6 @@ import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Repository
 public class FileUserDAO implements UserDAO {
 
     private Map<String, User> usersByEmail = new HashMap<>();

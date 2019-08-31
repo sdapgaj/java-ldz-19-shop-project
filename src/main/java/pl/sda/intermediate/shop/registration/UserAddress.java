@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.io.Serializable;
 
 @Setter
@@ -18,8 +19,8 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity
 public class UserAddress implements Serializable {
-
-    private long serialVersionUID = 1223L;
+    @Transient
+    private static long serialVersionUID = 1223L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
