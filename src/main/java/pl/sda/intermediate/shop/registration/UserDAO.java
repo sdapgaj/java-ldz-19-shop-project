@@ -1,16 +1,17 @@
 package pl.sda.intermediate.shop.registration;
 
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-@Service
+@Repository
 public class UserDAO {
 
     private Map<String, User> usersByEmail = new HashMap<>();
-    private String filePath = "/usr/home/michal/pageDatabase";
+    private String filePath = "D:\\work\\sda\\javaldz19\\intermediate\\src\\main\\resources\\pageDatabase";
 
     {
         this.readFromFile();
@@ -41,7 +42,6 @@ public class UserDAO {
     }
 
     public void readFromFile() {
-
         try (
                 FileInputStream fis = new FileInputStream(filePath);
                 ObjectInputStream ois = new ObjectInputStream(fis)
