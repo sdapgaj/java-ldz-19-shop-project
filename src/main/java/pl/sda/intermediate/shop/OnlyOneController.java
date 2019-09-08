@@ -1,6 +1,7 @@
 package pl.sda.intermediate.shop;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -100,6 +101,33 @@ public class OnlyOneController {
     public WeatherWrapper weather() {
         WeatherWrapper weatherWrapper = weatherService.downloadWeather();
         return weatherWrapper;
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/registration", method = RequestMethod.POST)
+    public ResponseEntity registrationApi(@RequestBody RegistrationDTO registrationDTO) {
+        System.out.println(registrationDTO);
+        Map<String, String> mapOfErrors = validationService.validateUserData(registrationDTO);
+        if (mapOfErrors.isEmpty()) {
+            try {
+                registrationService.register(registrationDTO);
+            } catch (UserExistsException e) {
+                return ResponseEntity.status(400).body(e.getMessage());
+            }
+            return ResponseEntity.ok("Registered");
+        } else {
+            return ResponseEntity.status(400).body(mapOfErrors);
+        }
+    }
+
+    @CrossOrigin
+    @RequestMapping(value = "/api/login", method = RequestMethod.POST)
+    public ResponseEntity login(@RequestBody LoginDTO loginDTO) {
+        if (loginService.login(loginDTO)) {
+            return ResponseEntity.ok("Logged-in");
+        } else {
+            return ResponseEntity.status(400).body("Login failed");
+        }
     }
 
 }
